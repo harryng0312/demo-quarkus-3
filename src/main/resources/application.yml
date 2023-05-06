@@ -1,0 +1,12 @@
+# common
+greeting:
+  message: "hello"
+
+# dev
+"%dev":
+  greeting:
+    message: "hello in dev"
+# prod
+"%prod":
+  greeting:
+    message: "hello in prod"
