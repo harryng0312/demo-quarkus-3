@@ -1,0 +1,82 @@
+<infinispan
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:infinispan:config:14.0 https://infinispan.org/schemas/infinispan-config-14.0.xsd
+            urn:infinispan:server:14.0 https://infinispan.org/schemas/infinispan-server-14.0.xsd
+            urn:org:jgroups http://www.jgroups.org/schema/jgroups-5.2.xsd"
+        xmlns="urn:infinispan:config:14.0"
+        xmlns:ispn="urn:infinispan:config:14.0"
+        xmlns:server="urn:infinispan:server:14.0">
+
+    <jgroups>
+        <stack name="pmobile3-stack" extends="tcp">
+            <!--
+            This configuration demonstrates cross-site replication on a single host and uses IP multicast for discovery.
+
+            To use this configuration, do the following:
+
+            * Copy the server/ directory to server2/.
+            * Open a terminal and run: ./bin/server.sh -c infinispan-xsite.xml
+            * Open another terminal and run: ./bin/server.sh -c infinispan-xsite.xml -s server2 -Dinfinispan.site.name=site2 -o 100 -Djgroups.mcast_port=46656
+            * Check server logs for the following message: "[org.infinispan.XSITE] ISPN000439: Received new x-site view: [site1, site2]"
+            -->
+<!--            <jgroups:TCPPING initial_hosts="${jgroups.tcpping.initial_hosts:hostname1[port1],hostname2[port2]}}"-->
+<!--                             port_range="0" ispn:stack.combine="REPLACE" ispn:stack.position="MPING"/>-->
+            <TCPPING initial_hosts="${jgroups.tcpping.initial_hosts:hostname1[port1],hostname2[port2]}}"
+                             port_range="0" num_discovery_runs="3"
+                             ispn:stack.combine="REPLACE" ispn:stack.position="MPING"
+                             xmlns="urn:org:jgroups" />
+<!--            <MPING ispn:stack.combine="REPLACE" ispn:stack.position="TCPPING"-->
+<!--                   xmlns="urn:org:jgroups"/>-->
+<!--            <jgroups:FD_SOCK ispn:stack.combine="REMOVE" />-->
+            <VERIFY_SUSPECT timeout="2000"
+                            xmlns="urn:org:jgroups"/>
+        </stack>
+    </jgroups>
+
+    <cache-container name="default" statistics="true">
+        <transport cluster="${infinispan.cluster.name:cluster}" stack="${infinispan.cluster.stack:tcp}"
+                   node-name="${infinispan.node.name:}"/>
+        <security>
+            <authorization/>
+        </security>
+    </cache-container>
+
+    <server xmlns="urn:infinispan:server:14.0">
+        <interfaces>
+            <interface name="public">
+                <inet-address value="${infinispan.bind.address:127.0.0.1}"/>
+            </interface>
+        </interfaces>
+
+        <socket-bindings default-interface="public" port-offset="${infinispan.socket.binding.port-offset:0}">
+            <socket-binding name="default" port="${infinispan.bind.port:11222}"/>
+            <socket-binding name="memcached" port="11221"/>
+        </socket-bindings>
+
+        <security>
+            <credential-stores>
+                <credential-store name="credentials" path="credentials.pfx">
+                    <clear-text-credential clear-text="secret"/>
+                </credential-store>
+            </credential-stores>
+            <security-realms>
+                <security-realm name="default">
+                    <!-- Uncomment to enable TLS on the realm -->
+                    <!-- server-identities>
+                       <ssl>
+                          <keystore path="application.keystore"
+                                    password="password" alias="server"
+                                    generate-self-signed-certificate-host="localhost"/>
+                       </ssl>
+                    </server-identities-->
+                    <properties-realm groups-attribute="Roles">
+                        <user-properties path="users.properties"/>
+                        <group-properties path="groups.properties"/>
+                    </properties-realm>
+                </security-realm>
+            </security-realms>
+        </security>
+
+        <endpoints socket-binding="default" security-realm="default"/>
+    </server>
+</infinispan>

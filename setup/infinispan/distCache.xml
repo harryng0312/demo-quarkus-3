@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<distributed-cache owners="2" mode="SYNC" statistics="true">
+    <encoding media-type="application/x-protostream"/>
+    <locking isolation="READ_COMMITTED"/>
+    <transaction mode="NON_XA" locking="PESSIMISTIC"/>
+    <memory storage="HEAP"/>
+    <persistence passivation="true">
+        <file-store>
+            <data path="./data/cache"/>
+            <index path="./data/index"/>
+        </file-store>
+    </persistence>
+</distributed-cache>
