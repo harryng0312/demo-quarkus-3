@@ -19,17 +19,21 @@
             * Open another terminal and run: ./bin/server.sh -c infinispan-xsite.xml -s server2 -Dinfinispan.site.name=site2 -o 100 -Djgroups.mcast_port=46656
             * Check server logs for the following message: "[org.infinispan.XSITE] ISPN000439: Received new x-site view: [site1, site2]"
             -->
-<!--            <jgroups:TCPPING initial_hosts="${jgroups.tcpping.initial_hosts:hostname1[port1],hostname2[port2]}}"-->
-<!--                             port_range="0" ispn:stack.combine="REPLACE" ispn:stack.position="MPING"/>-->
-            <TCPPING initial_hosts="${jgroups.tcpping.initial_hosts:hostname1[port1],hostname2[port2]}}"
-                             port_range="0" num_discovery_runs="3"
-                             ispn:stack.combine="REPLACE" ispn:stack.position="MPING"
-                             xmlns="urn:org:jgroups" />
-<!--            <MPING ispn:stack.combine="REPLACE" ispn:stack.position="TCPPING"-->
-<!--                   xmlns="urn:org:jgroups"/>-->
-<!--            <jgroups:FD_SOCK ispn:stack.combine="REMOVE" />-->
-            <VERIFY_SUSPECT timeout="2000"
-                            xmlns="urn:org:jgroups"/>
+            <!--            <jgroups:TCPPING initial_hosts="${jgroups.tcpping.initial_hosts:hostname1[port1],hostname2[port2]}}"-->
+            <!--                             port_range="0" ispn:stack.combine="REPLACE" ispn:stack.position="MPING"/>-->
+            <TCPPING initial_hosts="${jgroups.tcpping.initial_hosts:hostname1[port1],hostname2[port2]}"
+                     port_range="0" num_discovery_runs="1"
+                     ispn:stack.combine="REPLACE" ispn:stack.position="MPING"
+                     xmlns="urn:org:jgroups"/>
+            <!--            <TCPGOSSIP initial_hosts="${jgroups.gossipAddress:hostname1[port1]}"-->
+            <!--                       num_discovery_runs="3" discovery_rsp_expiry_time="2000"-->
+            <!--                       ispn:stack.combine="REPLACE" ispn:stack.position="MPING"-->
+            <!--                       xmlns="urn:org:jgroups"/>-->
+            <!--            <MPING ispn:stack.combine="REPLACE" ispn:stack.position="TCPPING"-->
+            <!--                   xmlns="urn:org:jgroups"/>-->
+            <!--            <jgroups:FD_SOCK ispn:stack.combine="REMOVE" />-->
+            <FD_SOCK2 ispn:stack.combine="REMOVE" xmlns="urn:org:jgroups"/>
+            <VERIFY_SUSPECT2 timeout="2000" xmlns="urn:org:jgroups"/>
         </stack>
     </jgroups>
 
