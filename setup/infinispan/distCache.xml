@@ -6,8 +6,8 @@
     <memory storage="HEAP"/>
     <persistence passivation="true">
         <file-store>
-            <data path="./data/cache"/>
-            <index path="./data/index"/>
+            <data path="./cache"/>
+            <index path="./index"/>
         </file-store>
     </persistence>
 </distributed-cache>
