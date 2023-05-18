@@ -16,7 +16,7 @@ public class InfinispanServerTest {
     static Logger logger = LoggerFactory.getLogger(InfinispanServerTest.class);
     @Inject
     @Remote("distCache")
-    RemoteCache<String, String> distCache;
+    protected RemoteCache<String, String> distCache;
     @Test
     public void testReadWriteCache() throws InterruptedException {
         logger.info("hello");
@@ -25,4 +25,6 @@ public class InfinispanServerTest {
         String value = distCache.get("test key");
         logger.info("get: {}, {}", "test key", value);
     }
+
+
 }

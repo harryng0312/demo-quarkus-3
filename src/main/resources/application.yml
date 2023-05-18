@@ -21,7 +21,7 @@ quarkus:
         max-backup-index: 10
     level: INFO
   infinispan-client:
-    hosts: "192.168.1.13:11222,192.168.1.13:11272,192.168.1.13:11322"
+    hosts: 192.168.1.13:11222;192.168.1.13:11272;192.168.1.13:11322
     username: "infiuser"
     password: "infiuser"
   ## Docker 4 Mac workaround
