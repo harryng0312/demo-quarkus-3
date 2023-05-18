@@ -1,7 +1,33 @@
 # common
+quarkus:
+  http:
+    port: 8080
+  package:
+    type: uber-jar
+    runner-suffix: -all-${quarkus.profile}
+    output-name: demo-quarkus2
+  profile: dev
+  log:
+    console:
+      format: "%d{yyyy-MM-dd HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n"
+      enable: true
+    file:
+      format: "%d{yyyy-MM-dd HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n"
+      enable: true
+      path: ./log/demo.log
+      rotation:
+        file-suffix: .yyyy-MM-dd
+        max-file-size: 50M
+        max-backup-index: 10
+    level: INFO
+  infinispan-client:
+    hosts: "192.168.1.13:11222"
+    username: "infiuser"
+    password: "infiuser"
+  ## Docker 4 Mac workaround
+    client-intelligence: BASIC
 greeting:
   message: "hello"
-
 # dev
 "%dev":
   greeting:
