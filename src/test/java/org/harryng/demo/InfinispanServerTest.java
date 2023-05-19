@@ -3,7 +3,6 @@ package org.harryng.demo;
 import io.quarkus.infinispan.client.Remote;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
-import org.infinispan.client.hotrod.DefaultTemplate;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
 import org.infinispan.client.hotrod.configuration.ConfigurationBuilder;
