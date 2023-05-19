@@ -30,6 +30,7 @@ quarkus:
 cache:
   cluster-name: test-cluster-name
   host: 192.168.2.254
+  name: testCache
 greeting:
   message: "hello"
 # dev

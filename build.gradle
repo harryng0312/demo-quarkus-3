@@ -28,8 +28,13 @@ dependencies {
     implementation 'io.quarkus:quarkus-cache'
     implementation 'io.quarkus:quarkus-reactive-routes'
     implementation 'io.quarkus:quarkus-arc'
+
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
+}
+
+configurations.implementation {
+    exclude group: 'org.infinispan', module: 'infinispan-commons'
 }
 
 group 'org.harryng.demo'
