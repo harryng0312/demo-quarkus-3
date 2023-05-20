@@ -26,6 +26,21 @@ quarkus:
     password: "infiuser"
   ## Docker 4 Mac workaround
     client-intelligence: BASIC
+    cache:
+      "testCache":
+        configuration: <?xml version="1.0"?>
+          <distributed-cache name="testCache" owners="2" mode="SYNC" remote-timeout="17500" statistics="true">
+            <encoding media-type="application/x-java-object"/>
+              <locking concurrency-level="1000" isolation="REPEATABLE_READ" acquire-timeout="15000" striping="false"/>
+            <transaction mode="FULL_XA" locking="PESSIMISTIC"/>
+            <expiration lifespan="3600000" max-idle="-1"/>
+            <persistence passivation="false">
+              <file-store>
+                <data path="data"/>
+                <index path="index"/>
+              </file-store>
+            </persistence><state-transfer timeout="60000"/>
+          </distributed-cache>
 
 cache:
   cluster-name: test-cluster-name
