@@ -52,7 +52,7 @@ public class AnnotationConfigInfinispanServerTest {
 
     @BeforeEach
     public void init() {
-        logger.info("testCache is transactional: {}", remoteCacheManager.isTransactional(CACHE_TEST_NAME));
+        logger.info("{} is transactional: {}", CACHE_TEST_NAME, remoteCacheManager.isTransactional(CACHE_TEST_NAME));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class AnnotationConfigInfinispanServerTest {
     @Test
     public void testCreateTransactionalCache() throws InterruptedException, SystemException, NotSupportedException {
 //        RemoteCache<String, String> cache = remoteCacheManager.getCache("testCache");
-        RemoteCache<String, String> testCache = remoteCacheManager.getCache(CACHE_TEST_NAME,
+        RemoteCache<String, String> testCache = remoteCacheManager.getCache(CACHE_TEST_NAME, true,
                 TransactionMode.FULL_XA, GenericTransactionManagerLookup.getInstance().getTransactionManager());
         TransactionManager transactionManager = testCache.getTransactionManager();
         try {
